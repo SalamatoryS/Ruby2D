@@ -11,6 +11,11 @@ public class Projectile : MonoBehaviour
         rigidbody2d = GetComponent<Rigidbody2D>();
     }
 
+    private void Start()
+    {
+        Invoke("DestroyObj", 1);
+    }
+
     public void Launch(Vector2 direction, float forse)
     {
         rigidbody2d.AddForce(direction * forse);
@@ -18,7 +23,16 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Projectile Collision with " + collision.gameObject);
+        EnemyController e = collision.collider.GetComponent<EnemyController>();
+        if (e != null)
+        {
+            e.Fix();
+        }
+        Destroy(gameObject);
+    }
+
+    public void DestroyObj()
+    {
         Destroy(gameObject);
     }
 }
