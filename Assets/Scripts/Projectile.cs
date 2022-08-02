@@ -30,7 +30,7 @@ public class Projectile : MonoBehaviour
         {
             e.Fix();
         }
-        projectileParticle.Play();
+        Instantiate(projectileParticle, gameObject.transform.position, projectileParticle.transform.rotation);
         Destroy(gameObject);
     }
 

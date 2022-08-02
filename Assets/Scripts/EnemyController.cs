@@ -55,7 +55,7 @@ public class EnemyController : MonoBehaviour
         {
             position.x = position.x + Time.deltaTime * speed * direction;
             animator.SetFloat("MoveX", direction);
-            animator.SetFloat("MoceY", 0);
+            animator.SetFloat("MoveY", 0);
         }
         rb.MovePosition(position);
     }
