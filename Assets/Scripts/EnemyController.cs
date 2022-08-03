@@ -7,16 +7,22 @@ public class EnemyController : MonoBehaviour
     public float speed;
     public bool vertical;
     public float changeTime = 3.0f;
+    public int damage = 1;
     public ParticleSystem smokeEffect;
+    public AudioClip enemyHit;
 
+    AudioSource enemyAudio;
     Rigidbody2D rb;
     Animator animator;
+    RubyController ruby;
     float timer;
     int direction = 1;
     bool broken = true;
 
     private void Start()
     {
+        ruby = GameObject.Find("Ruby").GetComponent<RubyController>();
+        enemyAudio = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody2D>();
         timer = changeTime;
         animator = GetComponent<Animator>();
@@ -65,7 +71,7 @@ public class EnemyController : MonoBehaviour
         RubyController player = other.gameObject.GetComponent<RubyController>();
         if (player != null)
         {
-            player.ChangeHealth(- 1);
+            player.ChangeHealth(- damage);
        }
     }
 
@@ -75,5 +81,7 @@ public class EnemyController : MonoBehaviour
         broken = false;
         rb.simulated = false;
         animator.SetTrigger("Fixed");
+        ruby.PlaySound(enemyHit);
+        enemyAudio.Pause();
     }
 }
